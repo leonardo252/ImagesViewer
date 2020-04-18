@@ -15,6 +15,17 @@ class ViewController: UITableViewController {
     var pictures: [String] = []
 //    var pictures = [String]()
     
+    func orderImg(_ pictures: [String]) -> [String] {
+        guard pictures.count > 1 else { return pictures}
+        
+        let pivot = pictures[pictures.count / 2]
+        let less = pictures.filter {$0 < pivot}
+        let equal = pictures.filter {$0 == pivot}
+        let greater = pictures.filter {$0 > pivot}
+        
+        return orderImg(less) + equal + orderImg(greater)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,12 +41,10 @@ class ViewController: UITableViewController {
                     pictures.append(item)
                 }
             }
-            
-            
-        }
+        }        
+        pictures.sort()
         
         print(pictures)
-        print(pictures[1] > pictures[2])
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -51,6 +60,8 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             vc.selectedImage = pictures[indexPath.row]
+            vc.indexImage = indexPath.row
+            vc.imagesCount = pictures.count
             navigationController?.pushViewController(vc, animated: true)
         }
     }

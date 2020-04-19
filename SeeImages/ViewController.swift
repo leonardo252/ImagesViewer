@@ -32,6 +32,8 @@ class ViewController: UITableViewController {
         title = "Galaxy Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+        
         let fm = FileManager.default
         if let path = Bundle.main.resourcePath {
             let items = try! fm.contentsOfDirectory(atPath: path)
@@ -64,6 +66,14 @@ class ViewController: UITableViewController {
             vc.imagesCount = pictures.count
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    @objc func shareTapped() {
+        let toShare = "Hey, this is the best app to see imagens and save in your galery, download it! See Images."
+        
+        let vc = UIActivityViewController(activityItems: [toShare], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 

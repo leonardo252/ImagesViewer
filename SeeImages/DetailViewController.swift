@@ -23,6 +23,7 @@ class DetailViewController: UIViewController {
                 title = "Picture \(indexImage+1) of \(totalImages)"
             }
         }
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
         navigationItem.largeTitleDisplayMode = .never
         
         if let imageToLoad = selectedImage {
